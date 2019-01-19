@@ -44,4 +44,11 @@ const styles = {
     }
 }
 
-export default connect(null, {locationChanged})(StartPage);
+const mapStateToProps = state => {
+    return {
+        location: state.place.location
+    };
+};
+
+
+export default connect(mapStateToProps, {locationChanged})(StartPage);
