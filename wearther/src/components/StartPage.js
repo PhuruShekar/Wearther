@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native';
-import {Connect} from 'react-redux';
-import {locationChanged} from '../actions';
+import {connect} from 'react-redux';
+import {locationChanged, findLocation} from '../actions';
 import {Card, CardSection, Input, Button} from './common';
 
 
@@ -10,6 +10,12 @@ class StartPage extends Component {
 
     onLocationChange(text) {
         this.props.locationChanged(text);
+    }
+
+    onButtonPress() {
+        const{location} = this.props;
+
+        this.props.findLocation({location});
     }
 
     render () {
@@ -26,7 +32,7 @@ class StartPage extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button>
+                    <Button onPress={this.onButtonPress.bind(this)}>
                         Find out!
                     </Button>
                 </CardSection>
@@ -51,4 +57,6 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, {locationChanged})(StartPage);
+export default connect(mapStateToProps,
+     {locationChanged, findLocation})
+     (StartPage);
