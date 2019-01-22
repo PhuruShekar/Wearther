@@ -5,3 +5,4 @@ export * /*as CardSection*/ from './CardSection';
 export * from './Confirm';
 export * from './Input';
 export * from './Spinner';
+export * from './DropdownItem';

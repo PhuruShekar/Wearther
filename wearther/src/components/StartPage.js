@@ -1,28 +1,15 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text,View, TextInput,ScrollView, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
+import {GoogleAutoComplete} from 'react-native-google-autocomplete';
+
 import {locationChanged, findLocation} from '../actions';
-import {Card, CardSection, Input, Button} from './common';
+import {DropdownItem, Button} from './common';
+import {API_KEY_GOOG} from '../API';
 
 
-class StartPage extends Component {
 
-
-    onLocationChange(text) {
-        this.props.locationChanged(text);
-    }
-
-    onButtonPress() {
-        const{location} = this.props;
-
-        this.props.findLocation({location});
-    }
-
-    render () {
-        return (
-            
-            <Card>
-                <Text style = {styles.textStyle}>Wearther</Text>
+           /* <Card> 
                 <CardSection>
                     <Input 
                         label="Location"
@@ -36,17 +23,99 @@ class StartPage extends Component {
                         Find out!
                     </Button>
                 </CardSection>
-            </Card>
+            </Card>*/
+
+
+class StartPage extends Component {
+
+
+    onLocationChange({text}) {
+        console.log('hi')
+        this.props.locationChanged({text});
+    }
+
+    onButtonPress() {
+        const{location} = this.props;
+        console.log('yeet: ',location);
+        this.props.findLocation({location});
+    }
+
+    render () {
+        return (
+            <View style={styles.containerStyle}> 
+                <Text style = {styles.titleStyle}>Wearther</Text>
+                <GoogleAutoComplete
+                    apiKey={API_KEY_GOOG}
+                    queryTypes={'(cities)'}
+                    debounce={350}
+                    minLength={3}
+                >
+                    {({handleTextChange,
+                     locationResults,
+                      fetchDetails,
+                       isSearching,
+                        inputValue,
+                        clearSearchs}) => (
+                        <React.Fragment>
+                            <View style={styles.inputWrapper}>
+                                <TextInput
+                                    placeholder='Whats new today?'
+                                    style={styles.inputStyle}
+                                    onChangeText={handleTextChange}
+                                    underlineColorAndroid='transparent'
+                                    value={inputValue}
+                                />
+                                <Button onPress={clearSearchs}>Clear </Button>
+                            </View>
+                            
+                            {isSearching && <ActivityIndicator size="large"/>}
+                            <ScrollView>
+                                {locationResults.map(el =>(
+                                    <DropdownItem 
+                                        {...el}
+                                        key={el.id}
+                                        fetchDetails={fetchDetails}
+                                    />
+                                ))}
+                            </ScrollView>
+                        </React.Fragment>
+                    )}
+
+                </GoogleAutoComplete>
+
+            </View> 
         );
     }
 }
 
 const styles = {
-    textStyle: {
+    titleStyle: {
         fontSize: 30,
         textAlign: 'center',
-        marginTop: 100,
-        marginBottom: 100
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    inputStyle: { 
+        fontSize: 18,
+        height:40,
+        borderWidth:1,
+        borderColor: '#000fff',
+        flex: 2,
+    },
+
+    containerStyle: {
+        //height: 40,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent:'center',
+        marginTop:50,
+    },
+    inputWrapper: {
+        marginTop: 50,
+        flexDirection: 'row',
+        marginLeft: 20,
+        marginRight: 20,
+
     }
 }
 
