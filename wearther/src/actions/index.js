@@ -1,20 +1,7 @@
-import {LOCATION_CHANGED, LOCATIONS_UPDATED} from './types';
-import {API_KEY_GOOG,API_KEY_WEATHER} from '../API';
-//import debounce from 'lodash/debounce';
-import axios from 'axios';
 
+import {Actions} from 'react-native-router-flux';
 
-
-export const locationChanged = ({query}) => {
-  return (dispatch) => {
-    axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=(cities)&key=${API_KEY_GOOG}`)
-      .then(response => {
-          dispatch(consol.log(response));
-      });
-  
-    };
-};
-
+import {DETAILS_FOUND} from './types';
 //{type:LOCATIONS_UPDATED, payload: response}
 /*
 
@@ -25,9 +12,14 @@ to get lat and long which will then be used in the dark sky weather api
 
 */
 
-export const findLocation = ({location}) => {
- 
-};
+const locationDetails = (dispatch, details) => {
+    dispatch({
+        type:DETAILS_FOUND,
+        payload: location
+    });
+
+    Actions.main();
+}
 
 export const findWeather = ({weather}) => {
 

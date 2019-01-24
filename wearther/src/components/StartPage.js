@@ -31,13 +31,13 @@ class StartPage extends Component {
 
     onLocationChange({text}) {
         console.log('hi')
-        this.props.locationChanged({text});
+        //this.props.locationChanged({text});
+        //this.props.findLocation({location});
     }
 
     onButtonPress() {
-        const{location} = this.props;
-        console.log('yeet: ',location);
-        this.props.findLocation({location});
+      
+      this.textInput.clear();
     }
 
     render () {
@@ -47,7 +47,7 @@ class StartPage extends Component {
                 <GoogleAutoComplete
                     apiKey={API_KEY_GOOG}
                     queryTypes={'(cities)'}
-                    debounce={350}
+                    debounce={300}
                     minLength={3}
                 >
                     {({handleTextChange,
@@ -64,8 +64,9 @@ class StartPage extends Component {
                                     onChangeText={handleTextChange}
                                     underlineColorAndroid='transparent'
                                     value={inputValue}
+                                    ref={input => { this.textInput = input }}
                                 />
-                                <Button onPress={clearSearchs}>Clear </Button>
+                                <Button onPress={clearSearchs}>Clear </ Button >
                             </View>
                             
                             {isSearching && <ActivityIndicator size="large"/>}

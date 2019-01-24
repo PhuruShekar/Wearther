@@ -8,7 +8,7 @@ import ReduxThunk from 'redux-thunk';
 
 import {API_KEY_FIREBASE} from '../src/API';
 import StartPage from './components/StartPage';
-
+import Router from './Router';
 
 
 
