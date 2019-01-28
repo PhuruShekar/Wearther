@@ -1,14 +1,14 @@
-import {DETAILS_FOUND} from '../actions/types'; 
+import {REQ_WEATHER} from '../actions/types'; 
 
 
-const INITIAL_STATE = {location:''};
+const INITIAL_STATE = {weather:''};
 
 export default (state = INITIAL_STATE, action) => {
     console.log('actionL',action);
     switch (action.type) {
 
-        case DETAILS_FOUND:
-            return {...state, location: action.payload};
+        case REQ_WEATHER:
+            return {...state, weather: action.payload};
         
         default:
             return state;

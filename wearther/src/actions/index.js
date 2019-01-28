@@ -1,7 +1,7 @@
 
 import {Actions} from 'react-native-router-flux';
-
-import {DETAILS_FOUND} from './types';
+import Config from 'react-native-config';
+import {REQ_WEATHER} from './types';
 //{type:LOCATIONS_UPDATED, payload: response}
 /*
 
@@ -14,16 +14,21 @@ to get lat and long which will then be used in the dark sky weather api
 
 const locationDetails = (dispatch, details) => {
     dispatch({
-        type:DETAILS_FOUND,
-        payload: location
+        type:REQ_WEATHER,
+        payload: details
     });
 
-    Actions.main();
+    Actions.mainpage();
 }
 
-export const findWeather = ({weather}) => {
+ export const findWeather = (lat,lng) => {
 
-    return (dispatch) => {
-      fetch(``)
-    }
+    return  fetch(`https://api.darksky.net/forecast/${Config.REACT_APP_API_KEY_WEATHER}/${lat},${lng}`)
+            .then((response) => response.json() )
+            .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+            });
+    
 }
+

@@ -1,12 +1,13 @@
 import React, {PureComponent} from 'react';
-import {Alert, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
+import {findWeather} from '../../actions';
 
 class DropdownItem extends PureComponent {
 
     handlePress = async() => {
         const res = await this.props.fetchDetails(this.props.place_id)
-        console.log('result',res.geometry.location);
-        
+        console.log('result',res.geometry.location.lat,res.geometry.location.lng);
+        findWeather(res.geometry.location.lat,res.geometry.location.lng);
     }
 
     render() {

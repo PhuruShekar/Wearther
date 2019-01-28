@@ -5,34 +5,15 @@ import {GoogleAutoComplete} from 'react-native-google-autocomplete';
 
 import {locationChanged, findLocation} from '../actions';
 import {DropdownItem, Button} from './common';
-import {API_KEY_GOOG} from '../API';
+import Config from 'react-native-config';
 
-
-
-           /* <Card> 
-                <CardSection>
-                    <Input 
-                        label="Location"
-                        placeholder="What's new today?"
-                        onChangeText={this.onLocationChange.bind(this)}
-                    />
-                </CardSection>
-
-                <CardSection>
-                    <Button onPress={this.onButtonPress.bind(this)}>
-                        Find out!
-                    </Button>
-                </CardSection>
-            </Card>*/
-
+const GOOG_KEY =Config.REACT_APP_API_KEY_GOOG;
 
 class StartPage extends Component {
 
 
     onLocationChange({text}) {
         console.log('hi')
-        //this.props.locationChanged({text});
-        //this.props.findLocation({location});
     }
 
     onButtonPress() {
@@ -45,7 +26,7 @@ class StartPage extends Component {
             <View style={styles.containerStyle}> 
                 <Text style = {styles.titleStyle}>Wearther</Text>
                 <GoogleAutoComplete
-                    apiKey={API_KEY_GOOG}
+                    apiKey= {GOOG_KEY}
                     queryTypes={'(cities)'}
                     debounce={300}
                     minLength={3}
