@@ -14,7 +14,7 @@ to get lat and long which will then be used in the dark sky weather api
 
 const locationDetails = (dispatch, details) => {
     dispatch({
-        type:REQ_WEATHER,
+        type:DETAILS_FOUND,
         payload: details
     });
 
@@ -23,12 +23,16 @@ const locationDetails = (dispatch, details) => {
 
  export const findWeather = (lat,lng) => {
 
-    return  fetch(`https://api.darksky.net/forecast/${Config.REACT_APP_API_KEY_WEATHER}/${lat},${lng}`)
+    return  (dispatch) => {
+        
+        dispatch({type: REQ_WEATHER});
+        
+        fetch(`https://api.darksky.net/forecast/${Config.REACT_APP_API_KEY_WEATHER}/${lat},${lng}`)
             .then((response) => response.json() )
             .then((responseJson) => {
                 console.log(responseJson);
-                return responseJson;
+                locationDetails(dispatch, responseJson);
             });
-    
+        };
 }
 
